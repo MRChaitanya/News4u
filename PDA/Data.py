@@ -8,6 +8,8 @@ YOUTUBE_API_VERSION = "v3"
 
 firebase = firebase.FirebaseApplication('https://news4u-e0844.firebaseio.com/', None)
 
+
+
 # creating Youtube Resource Object
 youtube_object = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                        developerKey=DEVELOPER_KEY)
@@ -47,8 +49,9 @@ def youtube_search_keyword(query, max_results):
                 'videotitle': result["snippet"]["title"],
                 'videoid': result['id']['videoId']
             }
-            chalo = firebase.post('/Videos/', data)
-            print(chalo)
+            videoId= result['id']['videoId']
+            result = firebase.patch('/Retrieved/Videos/{}'.format(videoId), data)
+            print(result)
             print('Firebase Updated')
 
 
